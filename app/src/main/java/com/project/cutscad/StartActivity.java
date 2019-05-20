@@ -13,6 +13,7 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
+        // All the buttons present in this activity are linked below.
         final Button dairyButton = findViewById(R.id.dairyButton);
         final Button cerealsButton = findViewById(R.id.cerealsButton);
         final Button vegetablesButton = findViewById(R.id.vegetablesButton);
@@ -22,10 +23,14 @@ public class StartActivity extends AppCompatActivity {
         final Button sugarButton = findViewById(R.id.sugarButton);
         final Button alcoholButton = findViewById(R.id.alcoholButton);
 
+        /*
+        A click listener is assigned to each button.
+         */
+
         dairyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startInventoryActivity(dairyButton);
+                startInventoryActivity(dairyButton); // This method is at the end of this file.
             }
         });
 
@@ -79,6 +84,8 @@ public class StartActivity extends AppCompatActivity {
         });
     }
 
+    // This method sets the header of the inventory activity based on what button was pressed
+    // and then starts the activity.
     public void startInventoryActivity(Button button) {
         InventoryActivity.setHeader(button.getText().toString());
         startActivity(new Intent(StartActivity.this, InventoryActivity.class));
