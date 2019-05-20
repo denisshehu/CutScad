@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">CutScad</string>
+    <string name="textHeaderStart">Welcome!</string>
+    <string name="hintStart">Tap any of the food categories listed below to have a look at your inventory.</string>
+    <string name="dairy">Dairy</string>
+    <string name="cereals">Cereals</string>
+    <string name="vegetables">Vegetables</string>
+    <string name="fruits">Fruits</string>
+    <string name="meat">Meat</string>
+    <string name="seafood">Seafood</string>
+    <string name="sugaryFoods">Sugary foods</string>
+    <string name="alcohol">Alcohol</string>
+    <string name="inventory">Inventory</string>
+    <string name="addButtonInventory">Add inventory category</string>
+    <string name="milk">Milk</string>
 </resources>
