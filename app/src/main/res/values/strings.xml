@@ -11,10 +11,10 @@
     <string name="sugaryFoods">Sugary foods</string>
     <string name="alcohol">Alcohol</string>
     <string name="inventory">Inventory</string>
-    <string name="addButtonInventory">Add inventory category</string>
+    <string name="addButtonInventory">Add product list</string>
     <string name="milk">Milk</string>
-    <string name="newCategory">New inventory category</string>
-    <string name="categoryName">Category name:</string>
+    <string name="newCategory">New list</string>
+    <string name="categoryName">List name:</string>
     <string name="nameFieldHintPUC">type in category\'s name</string>
     <string name="lifespanPUC">Average lifespan:</string>
     <string name="days">days</string>
@@ -22,4 +22,7 @@
     <string name="lifespanFieldHintPUC">e.g. 10</string>
     <string name="cancel">Cancel</string>
     <string name="add">Add</string>
+    <string name="noListsP1">You do not have any product lists yet, tap</string>
+    <string name="noListsP2">to add a new list to this food category.</string>
+    <string name="noProductsList">There are no products in this list yet.</string>
 </resources>

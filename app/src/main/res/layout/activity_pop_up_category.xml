@@ -7,7 +7,7 @@
     tools:context=".PopUpCategoryActivity">
 
     <LinearLayout
-        android:id="@+id/popUpCategory"
+        android:id="@+id/popUpList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -25,30 +25,31 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:id="@+id/headerPUC"
+            android:id="@+id/headerPUL"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textHeaderPopUpC"
+                android:id="@+id/headerTextPUL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/segoe_pro_bold"
                 android:text="@string/newCategory"
                 android:textAlignment="viewStart"
                 android:textColor="@android:color/black"
-                android:textSize="24sp" />
+                android:textSize="34sp" />
 
             <View
+                android:id="@+id/headerSeparatorPUL"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@android:color/black" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/categoryNamePUC"
+            android:id="@+id/listNamePUL"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
@@ -66,7 +67,7 @@
                 android:textSize="20sp" />
 
             <EditText
-                android:id="@+id/nameField"
+                android:id="@+id/nameFieldPUL"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -85,7 +86,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/categoryLifespanPUC"
+            android:id="@+id/listLifespanPUL"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
@@ -111,7 +112,7 @@
                 android:orientation="horizontal">
 
                 <EditText
-                    android:id="@+id/lifespanField"
+                    android:id="@+id/lifespanFieldPUL"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/text_field"
@@ -160,7 +161,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/buttonsPUC"
+            android:id="@+id/buttonsPUL"
             style="?android:attr/buttonBarStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -170,7 +171,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/cancelButtonPUC"
+                android:id="@+id/cancelButtonPUL"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="120dp"
                 android:layout_height="40dp"
@@ -181,7 +182,7 @@
                 android:textColor="@color/colorPrimary" />
 
             <Button
-                android:id="@+id/addButtonPUC"
+                android:id="@+id/addButtonPUL"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="120dp"
                 android:layout_height="40dp"

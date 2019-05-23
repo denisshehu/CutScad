@@ -42,7 +42,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/black_stroke_button"
-        android:drawableStart="@drawable/ic_add"
+        android:drawableStart="@drawable/ic_add_white"
         android:drawablePadding="5dp"
         android:fontFamily="@font/segoe_pro_semilight"
         android:paddingStart="10dp"
@@ -53,8 +53,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/headerInventory" />
 
-    <ScrollView
-        android:id="@+id/scrollViewInventory"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerViewInventory"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
@@ -64,11 +64,41 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addButtonInventory" />
+
+    <LinearLayout
+        android:id="@+id/noListsText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/recyclerViewInventory"
+        app:layout_constraintEnd_toEndOf="@+id/recyclerViewInventory"
+        app:layout_constraintStart_toStartOf="@+id/recyclerViewInventory"
         app:layout_constraintTop_toBottomOf="@+id/addButtonInventory">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/noListsText1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </ScrollView>
+            android:drawableEnd="@drawable/ic_add_black"
+            android:fontFamily="@font/segoe_pro_semilight"
+            android:text="@string/noListsP1"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/noListsText2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/segoe_pro_semilight"
+            android:text="@string/noListsP2"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+    </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>

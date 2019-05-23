@@ -6,16 +6,15 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.TextView;
+import android.widget.Toast;
+
+import com.project.cutscad.Models.ProductList;
 
 public class PopUpCategoryActivity extends Activity {
-
-    static String header = "New inventory category"; // Pop up window header
-
-    public static void setHeader(String text) {
-        header = text;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +37,6 @@ public class PopUpCategoryActivity extends Activity {
         // and what is not behind the window will still be visible.
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        // Link the header of the pop up window and change it dependent on the food category.
-        TextView textHeader = findViewById(R.id.textHeaderPopUpC);
-        String text = "New " + header + " category";
-        textHeader.setText(text);
-
         // Link the radio buttons and make the color of their circle change to red when checked
         // and black otherwise.
         RadioButton daysRadioButton = findViewById(R.id.daysRadioButton);
@@ -63,5 +57,35 @@ public class PopUpCategoryActivity extends Activity {
 
         daysRadioButton.setButtonTintList(colorStateList);
         weeksRadioButton.setButtonTintList(colorStateList);
+
+        final EditText nameField = findViewById(R.id.nameFieldPUL);
+        final EditText lifespanField = findViewById(R.id.lifespanFieldPUL);
+
+        Button cancel = findViewById(R.id.cancelButtonPUL);
+        Button add = findViewById(R.id.addButtonPUL);
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String name = nameField.getText().toString().trim();
+                String lifespan = lifespanField.getText().toString().trim();
+
+                if (name.length() == 0 || lifespan.length() == 0) {
+                    Toast.makeText(getApplicationContext(), "Please fill in both fields.",
+                            Toast.LENGTH_LONG).show();
+                } else {
+                    ProductList a = new ProductList(name, InventoryActivity.header, lifespan);
+                    finish();
+                }
+            }
+        });
     }
 }
