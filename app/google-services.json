@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "76740209350",
+    "firebase_url": "https://cutscad.firebaseio.com",
+    "project_id": "cutscad",
+    "storage_bucket": "cutscad.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:76740209350:android:cdfc73c2066cdcf0",
+        "android_client_info": {
+          "package_name": "com.project.cutscad"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "76740209350-roeekimrp3eusu65lo1st5rtgdkr86bh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDskSb4LE0iSn6YgElo6Gwz6f5du9AuGU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "76740209350-roeekimrp3eusu65lo1st5rtgdkr86bh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

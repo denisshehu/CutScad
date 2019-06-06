@@ -25,4 +25,14 @@
     <string name="noListsP1">You do not have any product lists yet, tap</string>
     <string name="noListsP2">to add a new list to this food category.</string>
     <string name="noProductsList">There are no products in this list yet.</string>
+    <string name="productHeader">Milk</string>
+    <string name="addButtonProduct">Add Product</string>
+    <string name="noProductsP1">You do not have any products yet, tap</string>
+    <string name="noProductsP2">to add a new product to this list.</string>
+    <string name="purchaseDateHeader">Purchase date:</string>
+    <string name="purchaseDate">27.05.2019</string>
+    <string name="daysAgo">7 days ago</string>
+    <string name="expirationDateHeader">Expiration date:</string>
+    <string name="expirationDate">03.06.2019</string>
+    <string name="zero">0</string>
 </resources>
