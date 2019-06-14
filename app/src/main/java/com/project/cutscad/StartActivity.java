@@ -6,7 +6,22 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.project.cutscad.Models.FoodCategory;
+import com.project.cutscad.Models.Frequency;
+import com.project.cutscad.Models.Product;
+import com.project.cutscad.Models.ProductList;
+import java.util.ArrayList;
+
 public class StartActivity extends AppCompatActivity {
+
+    ArrayList<ProductList> dairy = new ArrayList<>();
+    ArrayList<ProductList> cereals = new ArrayList<>();
+    ArrayList<ProductList> vegetables = new ArrayList<>();
+    ArrayList<ProductList> fruits = new ArrayList<>();
+    ArrayList<ProductList> meat = new ArrayList<>();
+    ArrayList<ProductList> seafood = new ArrayList<>();
+    ArrayList<ProductList> sugar = new ArrayList<>();
+    ArrayList<ProductList> alcohol = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +38,9 @@ public class StartActivity extends AppCompatActivity {
         final Button sugarButton = findViewById(R.id.sugarButton);
         final Button alcoholButton = findViewById(R.id.alcoholButton);
 
+        ProductList milk = new ProductList("Milk", FoodCategory.DAIRY, 10, Frequency.DAY, new ArrayList<Product>());
+        dairy.add(milk);
+
         /*
         A click listener is assigned to each button.
          */
@@ -31,6 +49,7 @@ public class StartActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startInventoryActivity(dairyButton); // This method is at the end of this file.
+                InventoryActivity.setData(dairy);
             }
         });
 
@@ -38,6 +57,7 @@ public class StartActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startInventoryActivity(cerealsButton);
+                InventoryActivity.setData(cereals);
             }
         });
 
@@ -45,6 +65,7 @@ public class StartActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startInventoryActivity(vegetablesButton);
+                InventoryActivity.setData(vegetables);
             }
         });
 
@@ -52,6 +73,7 @@ public class StartActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startInventoryActivity(fruitsButton);
+                InventoryActivity.setData(fruits);
             }
         });
 
@@ -59,6 +81,7 @@ public class StartActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startInventoryActivity(meatButton);
+                InventoryActivity.setData(meat);
             }
         });
 
@@ -66,6 +89,7 @@ public class StartActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startInventoryActivity(seafoodButton);
+                InventoryActivity.setData(seafood);
             }
         });
 
@@ -73,6 +97,7 @@ public class StartActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startInventoryActivity(sugarButton);
+                InventoryActivity.setData(sugar);
             }
         });
 
@@ -80,6 +105,7 @@ public class StartActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startInventoryActivity(alcoholButton);
+                InventoryActivity.setData(alcohol);
             }
         });
     }

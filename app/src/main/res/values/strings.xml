@@ -35,4 +35,12 @@
     <string name="expirationDateHeader">Expiration date:</string>
     <string name="expirationDate">03.06.2019</string>
     <string name="zero">0</string>
+    <string name="lifespanText">Product lifespan:</string>
+    <string name="lifespanValue">7 days</string>
+    <string name="weightText">Weight:</string>
+    <string name="weightValue">0.5 kg</string>
+    <string name="throwProduct">Throw</string>
+    <string name="edit">Edit</string>
+    <string name="left">Left</string>
+    <string name="updateButton">Update</string>
 </resources>

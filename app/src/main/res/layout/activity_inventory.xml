@@ -50,7 +50,7 @@
         android:layout_height="30dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/black_stroke_button"
+        android:background="@drawable/black_button"
         android:drawableStart="@drawable/ic_add_white"
         android:drawablePadding="5dp"
         android:fontFamily="@font/segoe_pro_semilight"
@@ -69,7 +69,6 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -79,14 +78,13 @@
         android:id="@+id/noListsText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:gravity="center"
         android:orientation="vertical"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/recyclerViewInventory"
         app:layout_constraintEnd_toEndOf="@+id/recyclerViewInventory"
         app:layout_constraintStart_toStartOf="@+id/recyclerViewInventory"
-        app:layout_constraintTop_toBottomOf="@+id/addButtonInventory">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/noListsText1"

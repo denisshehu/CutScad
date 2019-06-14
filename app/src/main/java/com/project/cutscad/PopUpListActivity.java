@@ -10,11 +10,28 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.project.cutscad.Models.Frequency;
+import com.project.cutscad.Models.Product;
 import com.project.cutscad.Models.ProductList;
+import java.util.ArrayList;
 
-public class PopUpCategoryActivity extends Activity {
+public class PopUpListActivity extends Activity {
+
+    static String header;
+    static ProductList productList;
+    static Boolean updating = false;
+
+    public static void fillInformation(String headerText, ProductList products) {
+        header = headerText;
+        productList = products;
+        updating = true;
+    }
+
+    RadioButton daysRadioButton;
+    RadioButton weeksRadioButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +56,8 @@ public class PopUpCategoryActivity extends Activity {
 
         // Link the radio buttons and make the color of their circle change to red when checked
         // and black otherwise.
-        RadioButton daysRadioButton = findViewById(R.id.daysRadioButton);
-        RadioButton weeksRadioButton = findViewById(R.id.weeeksRadioButton);
+        daysRadioButton = findViewById(R.id.daysRadioButton);
+        weeksRadioButton = findViewById(R.id.weeeksRadioButton);
 
         int red = getResources().getColor(R.color.colorPrimary);
         int black = getResources().getColor(R.color.colorPrimaryDark);
@@ -58,15 +75,32 @@ public class PopUpCategoryActivity extends Activity {
         daysRadioButton.setButtonTintList(colorStateList);
         weeksRadioButton.setButtonTintList(colorStateList);
 
+        TextView windowHeader = findViewById(R.id.headerTextPUL);
+
         final EditText nameField = findViewById(R.id.nameFieldPUL);
         final EditText lifespanField = findViewById(R.id.lifespanFieldPUL);
 
         Button cancel = findViewById(R.id.cancelButtonPUL);
         Button add = findViewById(R.id.addButtonPUL);
 
+        if (updating) {
+            windowHeader.setText(header);
+            nameField.setText(productList.getListName());
+            lifespanField.setText(Integer.toString(productList.getLifespan()));
+            if (productList.getFrequency() == Frequency.DAY) {
+                daysRadioButton.setChecked(true);
+                weeksRadioButton.setChecked(false);
+            } else {
+                daysRadioButton.setChecked(false);
+                weeksRadioButton.setChecked(true);
+            }
+            add.setText(R.string.updateButton);
+        }
+
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                updating = false;
                 finish();
             }
         });
@@ -82,7 +116,24 @@ public class PopUpCategoryActivity extends Activity {
                     Toast.makeText(getApplicationContext(), "Please fill in both fields.",
                             Toast.LENGTH_LONG).show();
                 } else {
-                    ProductList a = new ProductList(name, InventoryActivity.header, lifespan);
+                    if (updating) {
+                        productList.setListName(name);
+                        productList.setLifespan(Integer.parseInt(lifespan));
+                        productList.setFrequency(ProductList.findFrequency(daysRadioButton));
+                        InventoryActivity.adapter.notifyDataSetChanged();
+                        Toast.makeText(getApplicationContext(), "List information updated.",
+                                Toast.LENGTH_LONG).show();
+                    } else {
+                        ProductList productlist = new ProductList(name,
+                                ProductList.findCategory(InventoryActivity.getHeader()),
+                                Integer.parseInt(lifespan),
+                                ProductList.findFrequency(daysRadioButton),
+                                new ArrayList<Product>());
+                        InventoryActivity.addProductList(productlist);
+                        Toast.makeText(getApplicationContext(), "New list added.",
+                                Toast.LENGTH_LONG).show();
+                    }
+                    updating = false;
                     finish();
                 }
             }

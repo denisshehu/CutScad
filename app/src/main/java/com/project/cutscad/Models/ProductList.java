@@ -1,15 +1,23 @@
 package com.project.cutscad.Models;
 
+import android.widget.RadioButton;
+import java.util.ArrayList;
+
 public class ProductList {
 
     private String listName;
     private FoodCategory foodCategory;
-    private int lifespan;
+    private Integer lifespan;
+    private Frequency frequency;
+    private ArrayList<Product> products;
 
-    public ProductList(String listName, String foodCategory, String lifespan) {
+    public ProductList(String listName, FoodCategory foodCategory, Integer lifespan,
+                      Frequency frequency, ArrayList<Product> products) {
         this.listName = listName;
-        this.foodCategory = findCategory(foodCategory);
-        this.lifespan = Integer.parseInt(lifespan);
+        this.foodCategory = foodCategory;
+        this.lifespan = lifespan;
+        this.frequency = frequency;
+        this.products = products;
     }
 
     public String getListName() {
@@ -24,20 +32,48 @@ public class ProductList {
         return lifespan;
     }
 
-    private FoodCategory findCategory(String foodCategory) {
+    public Frequency getFrequency() {
+        return frequency;
+    }
+
+    public ArrayList<Product> getProducts() {
+        return products;
+    }
+
+    public void setListName(String listName) {
+        this.listName = listName;
+    }
+
+    public void setFoodCategory(FoodCategory foodCategory) {
+        this.foodCategory = foodCategory;
+    }
+
+    public void setLifespan(Integer lifespan) {
+        this.lifespan = lifespan;
+    }
+
+    public void setFrequency(Frequency frequency) {
+        this.frequency = frequency;
+    }
+
+    public void setProducts(ArrayList<Product> products) {
+        this.products = products;
+    }
+
+    public static FoodCategory findCategory(String foodCategory) {
         switch (foodCategory.charAt(0)) {
-            case 'd':
+            case 'D':
                 return FoodCategory.DAIRY;
-            case 'c':
+            case 'C':
                 return FoodCategory.CEREALS;
-            case 'v':
+            case 'V':
                 return FoodCategory.VEGETABLES;
-            case 'f':
+            case 'F':
                 return FoodCategory.FRUITS;
-            case 'm':
+            case 'M':
                 return FoodCategory.MEAT;
-            case 's':
-                if (foodCategory.charAt(1) == 'e') {
+            case 'S':
+                if (foodCategory.charAt(1) == 'E') {
                     return FoodCategory.SEAFOOD;
                 } else {
                     return FoodCategory.SUGARY_FOODS;
@@ -45,5 +81,31 @@ public class ProductList {
             default:
                 return FoodCategory.ALCOHOL;
         }
+    }
+
+    public static Frequency findFrequency(RadioButton daysRadioButton) {
+        if (daysRadioButton.isChecked()) {
+            return Frequency.DAY;
+        } else {
+            return Frequency.WEEK;
+        }
+    }
+
+    public int[] groupProducts() {
+        int[] groupedProducts = new int[3];
+        Product product;
+
+        for (int i = 0; i < products.size(); i++) {
+            product = products.get(i);
+
+            if (product.getRemainingDays() < 2) {
+                groupedProducts[0]++;
+            } else if (product.getRemainingDays().doubleValue() / this.lifespan.doubleValue() <= 0.5) {
+                groupProducts()[1]++;
+            } else {
+                groupProducts()[2]++;
+            }
+        }
+        return groupedProducts;
     }
 }

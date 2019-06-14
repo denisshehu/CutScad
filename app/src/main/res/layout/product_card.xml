@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
 
     <LinearLayout
         android:id="@+id/productCard"
@@ -20,6 +21,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
             android:layout_weight="4"
@@ -28,13 +30,14 @@
             <LinearLayout
                 android:id="@+id/datesProductCard"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:orientation="horizontal"
-                android:baselineAligned="false">
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
 
                 <LinearLayout
+                    android:id="@+id/purchaseDateBox"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:orientation="vertical">
 
@@ -70,14 +73,16 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/fromToIcon"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:orientation="horizontal"></LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/expirationDateBox"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:orientation="vertical">
 
@@ -103,6 +108,113 @@
 
                 </LinearLayout>
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/extraInformation"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/lifespan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/lifespanText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:fontFamily="@font/segoe_pro_semilight"
+                        android:text="@string/lifespanText"
+                        android:textAlignment="textStart"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/lifespanValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/segoe_pro_semibold"
+                        android:text="@string/lifespanValue"
+                        android:textAlignment="textStart"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/weight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/weightText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/segoe_pro_semilight"
+                        android:text="@string/weightText"
+                        android:textAlignment="textStart"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/weightValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/segoe_pro_semibold"
+                        android:text="@string/weightValue"
+                        android:textAlignment="textStart"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/cardButtons"
+                style="?android:attr/buttonBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="32dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/throwButton"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:background="@drawable/red_button"
+                    android:drawableStart="@drawable/ic_delete"
+                    android:drawablePadding="5dp"
+                    android:fontFamily="@font/segoe_pro_semilight"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:text="@string/throwProduct"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/white" />
+
+                <Button
+                    android:id="@+id/button"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:background="@drawable/black_button"
+                    android:drawableStart="@drawable/ic_edit"
+                    android:drawablePadding="5dp"
+                    android:fontFamily="@font/segoe_pro_semilight"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:text="@string/edit"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/white" />
+            </LinearLayout>
+
         </LinearLayout>
 
         <LinearLayout
@@ -110,7 +222,67 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/colorPrimary"
-            android:orientation="vertical"></LinearLayout>
+            android:background="@drawable/red_right_panel"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/addDaysButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                app:srcCompat="@drawable/ic_add_white" />
+
+            <LinearLayout
+                android:id="@+id/remainingDaysBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/remainingDays"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/segoe_pro_bold"
+                    android:text="@string/zero"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/white"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/daysText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/segoe_pro_light"
+                    android:text="@string/days"
+                    android:textAlignment="center"
+                    android:textAllCaps="true"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/leftText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/segoe_pro_light"
+                    android:text="@string/left"
+                    android:textAlignment="center"
+                    android:textAllCaps="true"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/subtractDaysButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                app:srcCompat="@drawable/ic_remove" />
+
+        </LinearLayout>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
