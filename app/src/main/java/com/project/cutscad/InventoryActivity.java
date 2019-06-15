@@ -33,12 +33,6 @@ public class InventoryActivity extends AppCompatActivity {
     static LinearLayout noListsText;
     static RecyclerView.Adapter adapter;
 
-    public static void addProductList(ProductList productList) {
-        lists.add(productList);
-        adapter.notifyItemInserted(lists.size() - 1);
-        checkVisibility();
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +65,28 @@ public class InventoryActivity extends AppCompatActivity {
         adapter = new ListRecyclerViewAdapter(lists, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    public static void addProductList(ProductList productList) {
+        lists.add(productList);
+        adapter.notifyItemInserted(lists.size() - 1);
+        checkVisibility();
+    }
+
+    public static void removeProductList(ProductList productList) {
+        int position = -1;
+        for (int i = 0; i < lists.size(); i++) {
+            if (lists.get(i).getListName().equals(productList.getListName())) {
+                position = i;
+                break;
+            }
+        }
+
+        if (position != -1) {
+            lists.remove(productList);
+            adapter.notifyItemRemoved(position);
+            checkVisibility();
+        }
     }
 
     private static void checkVisibility() {

@@ -8,17 +8,25 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.project.cutscad.Models.Product;
+import com.project.cutscad.Models.ProductList;
 
 import java.util.ArrayList;
 
 public class ProductActivity extends AppCompatActivity {
 
-    static ArrayList<Product> products;
+    static ProductList products;
     static String header = "";
 
-    public static void setInformation(ArrayList<Product> list, String text) {
+    static TextView headerText;
+
+    public static void setInformation(ProductList list) {
         products = list;
-        header = text;
+        header = list.getListName();
+    }
+
+    public static void updatePage(ProductList list) {
+        setInformation(list);
+        headerText.setText(header);
     }
 
     @Override
@@ -26,16 +34,27 @@ public class ProductActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
 
-        TextView headerText = findViewById(R.id.textHeaderProduct);
+        headerText = findViewById(R.id.textHeaderProduct);
         headerText.setText(header);
 
         ImageButton editButton = findViewById(R.id.editButtonProduct);
+        ImageButton deleteButton = findViewById(R.id.deleteButtonProduct);
 
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ProductActivity.this,
                         PopUpListActivity.class));
+                PopUpListActivity.update(products, false);
+            }
+        });
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ProductActivity.this,
+                        PopUpDeleteActivity.class));
+                PopUpDeleteActivity.getInformation(products, false);
             }
         });
     }

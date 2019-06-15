@@ -29,7 +29,7 @@ public class ListRecyclerViewAdapter extends
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.food_category_card,
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_card,
                 viewGroup, false);
         return new ViewHolder(view);
     }
@@ -49,7 +49,15 @@ public class ListRecyclerViewAdapter extends
             @Override
             public void onClick(View v) {
                 context.startActivity(new Intent(context, PopUpListActivity.class));
-                PopUpListActivity.fillInformation("Update list", productList);
+                PopUpListActivity.update(productList, true);
+            }
+        });
+
+        viewHolder.deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(new Intent(context, PopUpDeleteActivity.class));
+                PopUpDeleteActivity.getInformation(productList, true);
             }
         });
 
@@ -57,7 +65,7 @@ public class ListRecyclerViewAdapter extends
             @Override
             public void onClick(View v) {
                 context.startActivity(new Intent(context, ProductActivity.class));
-                ProductActivity.setInformation(productList.getProducts(), listName);
+                ProductActivity.setInformation(productList);
             }
         });
     }
@@ -74,6 +82,7 @@ public class ListRecyclerViewAdapter extends
         TextView orangeProducts;
         TextView greenProducts;
         ImageButton editButton;
+        ImageButton deleteButton;
         LinearLayout card;
 
         public ViewHolder(@NonNull View itemView) {
@@ -83,6 +92,7 @@ public class ListRecyclerViewAdapter extends
             orangeProducts = itemView.findViewById(R.id.orangeProducts);
             greenProducts = itemView.findViewById(R.id.greenProducts);
             editButton = itemView.findViewById(R.id.editButtonProductCard);
+            deleteButton = itemView.findViewById(R.id.deleteButtonProductCard);
             card = itemView.findViewById(R.id.productListCard);
         }
     }

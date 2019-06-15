@@ -42,10 +42,16 @@
                 android:id="@+id/editButtonProductCard"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="10dp"
                 android:background="@drawable/black_button"
                 app:srcCompat="@drawable/ic_edit" />
+
+            <ImageButton
+                android:id="@+id/deleteButtonProductCard"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/red_button"
+                app:srcCompat="@drawable/ic_delete" />
 
         </LinearLayout>
 

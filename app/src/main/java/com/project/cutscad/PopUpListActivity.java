@@ -22,85 +22,40 @@ public class PopUpListActivity extends Activity {
 
     static String header;
     static ProductList productList;
-    static Boolean updating = false;
+    static int updateMode = 0;
 
-    public static void fillInformation(String headerText, ProductList products) {
-        header = headerText;
-        productList = products;
-        updating = true;
-    }
-
+    TextView windowHeader;
+    EditText nameField;
+    EditText lifespanField;
     RadioButton daysRadioButton;
     RadioButton weeksRadioButton;
+    Button cancel;
+    Button add;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pop_up_category);
 
-        /*
-        This part of the code makes it possible for the pop up window to appear on the screen.
-         */
-
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-
-        int width = displayMetrics.widthPixels;
-        int height = displayMetrics.heightPixels;
-
-        getWindow().setLayout(width, height);
-
-        // Whatever was on the screen before the pop up window appeared
-        // and what is not behind the window will still be visible.
-        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        // Link the radio buttons and make the color of their circle change to red when checked
-        // and black otherwise.
+        windowHeader = findViewById(R.id.headerTextPUL);
+        nameField = findViewById(R.id.nameFieldPUL);
+        lifespanField = findViewById(R.id.lifespanFieldPUL);
         daysRadioButton = findViewById(R.id.daysRadioButton);
         weeksRadioButton = findViewById(R.id.weeeksRadioButton);
+        cancel = findViewById(R.id.cancelButtonPUL);
+        add = findViewById(R.id.addButtonPUL);
 
-        int red = getResources().getColor(R.color.colorPrimary);
-        int black = getResources().getColor(R.color.colorPrimaryDark);
-        ColorStateList colorStateList = new ColorStateList(
-                new int[][] {
-                        new int[] {-android.R.attr.state_checked}, // when not checked
-                        new int[] {android.R.attr.state_checked} // when checked
-                },
-                new int[] {
-                        black, // color corresponding to not checked
-                        red // when checked
-                }
-        );
+        showPopUp();
+        setRadioButtons();
 
-        daysRadioButton.setButtonTintList(colorStateList);
-        weeksRadioButton.setButtonTintList(colorStateList);
-
-        TextView windowHeader = findViewById(R.id.headerTextPUL);
-
-        final EditText nameField = findViewById(R.id.nameFieldPUL);
-        final EditText lifespanField = findViewById(R.id.lifespanFieldPUL);
-
-        Button cancel = findViewById(R.id.cancelButtonPUL);
-        Button add = findViewById(R.id.addButtonPUL);
-
-        if (updating) {
-            windowHeader.setText(header);
-            nameField.setText(productList.getListName());
-            lifespanField.setText(Integer.toString(productList.getLifespan()));
-            if (productList.getFrequency() == Frequency.DAY) {
-                daysRadioButton.setChecked(true);
-                weeksRadioButton.setChecked(false);
-            } else {
-                daysRadioButton.setChecked(false);
-                weeksRadioButton.setChecked(true);
-            }
-            add.setText(R.string.updateButton);
+        if (updateMode != 0) {
+            setUpdateMode();
         }
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updating = false;
+                updateMode = 0;
                 finish();
             }
         });
@@ -116,27 +71,100 @@ public class PopUpListActivity extends Activity {
                     Toast.makeText(getApplicationContext(), "Please fill in both fields.",
                             Toast.LENGTH_LONG).show();
                 } else {
-                    if (updating) {
-                        productList.setListName(name);
-                        productList.setLifespan(Integer.parseInt(lifespan));
-                        productList.setFrequency(ProductList.findFrequency(daysRadioButton));
-                        InventoryActivity.adapter.notifyDataSetChanged();
-                        Toast.makeText(getApplicationContext(), "List information updated.",
-                                Toast.LENGTH_LONG).show();
+                    if (updateMode != 0) {
+                        updateInformation(name, lifespan);
+
+                        if (updateMode == 2) {
+                            ProductActivity.updatePage(productList);
+                        }
                     } else {
                         ProductList productlist = new ProductList(name,
                                 ProductList.findCategory(InventoryActivity.getHeader()),
                                 Integer.parseInt(lifespan),
                                 ProductList.findFrequency(daysRadioButton),
                                 new ArrayList<Product>());
+
                         InventoryActivity.addProductList(productlist);
+
                         Toast.makeText(getApplicationContext(), "New list added.",
                                 Toast.LENGTH_LONG).show();
                     }
-                    updating = false;
+
+                    updateMode = 0;
                     finish();
                 }
             }
         });
+    }
+
+    private void showPopUp() {
+        // This part of the code makes it possible for the pop up window to appear on the screen.
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+
+        int width = displayMetrics.widthPixels;
+        int height = displayMetrics.heightPixels;
+
+        getWindow().setLayout(width, height);
+
+        // Whatever was on the screen before the pop up window appeared
+        // and what is not behind the window will still be visible.
+        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+    }
+
+    // Link the radio buttons and make the color of their circle change to red when checked
+    // and black otherwise.
+    private void setRadioButtons() {
+        int red = getResources().getColor(R.color.colorPrimary);
+        int black = getResources().getColor(R.color.colorPrimaryDark);
+        ColorStateList colorStateList = new ColorStateList(
+                new int[][] {
+                        new int[] {-android.R.attr.state_checked}, // when not checked
+                        new int[] {android.R.attr.state_checked} // when checked
+                },
+                new int[] {
+                        black, // color corresponding to not checked
+                        red // when checked
+                }
+        );
+
+        daysRadioButton.setButtonTintList(colorStateList);
+        weeksRadioButton.setButtonTintList(colorStateList);
+    }
+
+    public static void update(ProductList products, Boolean inInventory) {
+        header = "Update list";
+        productList = products;
+        if (inInventory) {
+            updateMode = 1;
+        } else {
+            updateMode = 2;
+        }
+    }
+
+    private void setUpdateMode() {
+        windowHeader.setText(header);
+        nameField.setText(productList.getListName());
+        lifespanField.setText(Integer.toString(productList.getLifespan()));
+        add.setText(R.string.updateButton);
+
+        if (productList.getFrequency() == Frequency.DAY) {
+            daysRadioButton.setChecked(true);
+            weeksRadioButton.setChecked(false);
+        } else {
+            daysRadioButton.setChecked(false);
+            weeksRadioButton.setChecked(true);
+        }
+    }
+
+    private void updateInformation(String name, String lifespan) {
+        productList.setListName(name);
+        productList.setLifespan(Integer.parseInt(lifespan));
+        productList.setFrequency(ProductList.findFrequency(daysRadioButton));
+
+        InventoryActivity.adapter.notifyDataSetChanged();
+
+        Toast.makeText(getApplicationContext(), "List information updated.",
+                Toast.LENGTH_LONG).show();
     }
 }
