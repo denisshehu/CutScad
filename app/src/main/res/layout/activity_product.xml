@@ -7,6 +7,7 @@
     tools:context=".ProductActivity">
 
     <include
+        android:id="@+id/include"
         layout="@layout/background"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -100,20 +101,19 @@
         app:layout_constraintTop_toBottomOf="@+id/addButtonProduct" />
 
     <LinearLayout
-        android:id="@+id/noListsText"
+        android:id="@+id/noProductsText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:gravity="center"
         android:orientation="vertical"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/recyclerViewProduct"
         app:layout_constraintEnd_toEndOf="@+id/recyclerViewProduct"
         app:layout_constraintStart_toStartOf="@+id/recyclerViewProduct"
-        app:layout_constraintTop_toBottomOf="@+id/addButtonProduct">
+        app:layout_constraintTop_toTopOf="@+id/include">
 
         <TextView
-            android:id="@+id/noListsText1"
+            android:id="@+id/noProductsText1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableEnd="@drawable/ic_add_black"
@@ -124,7 +124,7 @@
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/noListsText2"
+            android:id="@+id/noProductsText2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/segoe_pro_semilight"

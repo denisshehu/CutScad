@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".PopUpProductActivity"
+            android:theme="@style/AppTheme.PopUp" />
+        <activity
             android:name=".PopUpDeleteActivity"
             android:theme="@style/AppTheme.PopUp" />
         <activity android:name=".ProductActivity" />

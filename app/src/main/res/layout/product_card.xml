@@ -62,7 +62,7 @@
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/daysAgo"
+                        android:id="@+id/passedDays"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/segoe_pro_light"
@@ -145,7 +145,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/weight"
+                    android:id="@+id/weightPUP"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -200,7 +200,7 @@
                     android:textColor="@android:color/white" />
 
                 <Button
-                    android:id="@+id/button"
+                    android:id="@+id/editButtonProductCard"
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"

@@ -78,13 +78,13 @@ public class PopUpListActivity extends Activity {
                             ProductActivity.updatePage(productList);
                         }
                     } else {
-                        ProductList productlist = new ProductList(name,
+                        ProductList productList = new ProductList(name,
                                 ProductList.findCategory(InventoryActivity.getHeader()),
                                 Integer.parseInt(lifespan),
                                 ProductList.findFrequency(daysRadioButton),
                                 new ArrayList<Product>());
 
-                        InventoryActivity.addProductList(productlist);
+                        InventoryActivity.addProductList(productList);
 
                         Toast.makeText(getApplicationContext(), "New list added.",
                                 Toast.LENGTH_LONG).show();

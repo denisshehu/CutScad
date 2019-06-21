@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.project.cutscad.Models.Product;
 import com.project.cutscad.Models.ProductList;
 import java.util.ArrayList;
 
@@ -60,6 +61,12 @@ public class InventoryActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onRestart() {
+        super.onRestart();
+        this.recreate();
+    }
+
     private void buildRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.recyclerViewInventory);
         adapter = new ListRecyclerViewAdapter(lists, this);
@@ -75,8 +82,11 @@ public class InventoryActivity extends AppCompatActivity {
 
     public static void removeProductList(ProductList productList) {
         int position = -1;
+        ProductList list;
+
         for (int i = 0; i < lists.size(); i++) {
-            if (lists.get(i).getListName().equals(productList.getListName())) {
+            list = lists.get(i);
+            if (list == productList) {
                 position = i;
                 break;
             }

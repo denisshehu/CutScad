@@ -1,24 +1,28 @@
 package com.project.cutscad;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import com.project.cutscad.Models.Product;
+import com.project.cutscad.Models.ProductList;
 
 public class ProductRecyclerViewAdapter extends
         RecyclerView.Adapter<ProductRecyclerViewAdapter.ViewHolder> {
 
-    private ArrayList<ArrayList<String>> data = new ArrayList<>();
+    static private ProductList products;
     private Context context;
 
-    public ProductRecyclerViewAdapter(ArrayList<ArrayList<String>> data, Context context) {
-        this.data = data;
+    public ProductRecyclerViewAdapter(ProductList productList, Context context) {
+        products = productList;
         this.context = context;
     }
 
@@ -33,69 +37,131 @@ public class ProductRecyclerViewAdapter extends
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
 
+        final Product product = products.getProducts().get(i);
+        final TextView purchaseDate = viewHolder.purchaseDate;
+        final TextView expirationDate = viewHolder.expirationDate;
+        final TextView passedDays = viewHolder.passedDays;
+        final TextView lifespan = viewHolder.lifespan;
+        final TextView weight = viewHolder.weight;
         final TextView remainingDays = viewHolder.remainingDays;
-        Button addDaysButton = viewHolder.addDaysButton;
-        Button subtractDaysButton = viewHolder.subtractDaysButton;
+        final TextView daysText = viewHolder.daysText;
+        final Button throwButton = viewHolder.throwButton;
+        final Button editButton = viewHolder.editButton;
+        final LinearLayout cardColor = viewHolder.cardColor;
+        final ImageButton addDaysButton = viewHolder.addDaysButton;
+        final ImageButton subtractDaysButton = viewHolder.subtractDaysButton;
 
-        viewHolder.purchaseDate.setText(data.get(i).get(0));
-        viewHolder.expirationDate.setText(data.get(i).get(1));
-        viewHolder.daysAgo.setText(data.get(i).get(2));
-        viewHolder.lifespan.setText(data.get(i).get(3));
-        viewHolder.weight.setText(data.get(i).get(4));
-        remainingDays.setText(data.get(i).get(5));
-        viewHolder.daysText.setText(data.get(i).get(6));
+        displayInformation(product, purchaseDate, expirationDate, passedDays, lifespan, weight,
+                remainingDays, daysText, cardColor);
 
-        if (Integer.parseInt(remainingDays.getText().toString()) == 0) {
-            subtractDaysButton.setVisibility(View.INVISIBLE);
-        } else {
-            subtractDaysButton.setVisibility(View.VISIBLE);
-        }
+        throwButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(new Intent(context, PopUpDeleteActivity.class));
+                PopUpDeleteActivity.productInformation(product);
+            }
+        });
+
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(new Intent(context, PopUpProductActivity.class));
+            }
+        });
+
+        checkSubtractButtonVisibility(product.writeRemainingDays(), subtractDaysButton);
 
         addDaysButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int newValue = Integer.parseInt(remainingDays.getText().toString()) + 1;
-                remainingDays.setText(newValue);
+                product.setLifespan(product.getLifespan() + 1);
+                product.setExpirationDate(product.getLifespan());
+                displayInformation(product, purchaseDate, expirationDate, passedDays, lifespan,
+                        weight, remainingDays, daysText, cardColor);
+                checkSubtractButtonVisibility(product.writeRemainingDays(), subtractDaysButton);
             }
         });
 
         subtractDaysButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int newValue = Integer.parseInt(remainingDays.getText().toString()) - 1;
-                remainingDays.setText(newValue);
+                product.setLifespan(product.getLifespan() - 1);
+                product.setExpirationDate(product.getLifespan());
+                displayInformation(product, purchaseDate, expirationDate, passedDays, lifespan,
+                        weight, remainingDays, daysText, cardColor);
+                checkSubtractButtonVisibility(product.writeRemainingDays(), subtractDaysButton);
             }
         });
     }
 
+    private void displayInformation(Product product, TextView purchaseDate, TextView expirationDate,
+                                    TextView passedDays, TextView lifespan, TextView weight,
+                                    TextView remainingDays, TextView daysText,
+                                    LinearLayout cardColor) {
+        String daysRemaining = product.writeRemainingDays();
+        Double daysRemainingD = Double.valueOf(daysRemaining);
+
+        purchaseDate.setText(product.writeDate(product.getPurchaseDate()));
+        expirationDate.setText(product.writeDate(product.getExpirationDate()));
+        passedDays.setText(product.writePassedDays());
+        lifespan.setText(product.writeLifespan(product.getLifespan(),
+                products.getFrequency()));
+        weight.setText(product.writeWeight());
+        remainingDays.setText(daysRemaining);
+        daysText.setText(product.writeDaysText(daysRemaining));
+
+        if (daysRemainingD < 2.0) {
+            cardColor.setBackgroundResource(R.drawable.red_right_panel);
+        } else if (daysRemainingD / product.getLifespan().doubleValue() <= 0.5) {
+            cardColor.setBackgroundResource(R.drawable.orange_right_panel);
+        } else {
+            cardColor.setBackgroundResource(R.drawable.green_right_panel);
+        }
+    }
+
+    private void checkSubtractButtonVisibility(String daysRemaining,
+                                               ImageButton subtractDaysButton) {
+        if (daysRemaining.equals("0")) {
+            subtractDaysButton.setVisibility(View.INVISIBLE);
+            subtractDaysButton.setClickable(false);
+        } else {
+            subtractDaysButton.setVisibility(View.VISIBLE);
+            subtractDaysButton.setClickable(true);
+        }
+    }
+
     @Override
     public int getItemCount() {
-        return data.size();
+        return products.getProducts().size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView purchaseDate;
         TextView expirationDate;
-        TextView daysAgo;
+        TextView passedDays;
         TextView lifespan;
         TextView weight;
         TextView remainingDays;
         TextView daysText;
-
-        Button addDaysButton;
-        Button subtractDaysButton;
+        Button throwButton;
+        Button editButton;
+        LinearLayout cardColor;
+        ImageButton addDaysButton;
+        ImageButton subtractDaysButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             purchaseDate = itemView.findViewById(R.id.purchaseDate);
             expirationDate = itemView.findViewById(R.id.expirationDate);
-            daysAgo = itemView.findViewById(R.id.daysAgo);
+            passedDays = itemView.findViewById(R.id.passedDays);
             lifespan = itemView.findViewById(R.id.lifespanValue);
             weight = itemView.findViewById(R.id.weightValue);
             remainingDays = itemView.findViewById(R.id.remainingDays);
             daysText = itemView.findViewById(R.id.daysText);
-
+            throwButton = itemView.findViewById(R.id.throwButton);
+            editButton = itemView.findViewById(R.id.editButtonProductCard);
+            cardColor = itemView.findViewById(R.id.rightProductCard);
             addDaysButton = itemView.findViewById(R.id.addDaysButton);
             subtractDaysButton = itemView.findViewById(R.id.subtractDaysButton);
         }

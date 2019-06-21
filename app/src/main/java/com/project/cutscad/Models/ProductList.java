@@ -91,21 +91,7 @@ public class ProductList {
         }
     }
 
-    public int[] groupProducts() {
-        int[] groupedProducts = new int[3];
-        Product product;
-
-        for (int i = 0; i < products.size(); i++) {
-            product = products.get(i);
-
-            if (product.getRemainingDays() < 2) {
-                groupedProducts[0]++;
-            } else if (product.getRemainingDays().doubleValue() / this.lifespan.doubleValue() <= 0.5) {
-                groupProducts()[1]++;
-            } else {
-                groupProducts()[2]++;
-            }
-        }
-        return groupedProducts;
+    public ColoredProducts filterProducts() {
+        return new ColoredProducts(products, lifespan);
     }
 }
