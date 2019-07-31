@@ -22,10 +22,12 @@ import java.util.Calendar;
 public class PopUpProductActivity extends AppCompatActivity {
 
     private static Integer lifespan;
+    private static Frequency frequency;
     private DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
-    public static void setLifespan(Integer number) {
+    public static void setLifespan(Integer number, Frequency period) {
         lifespan = number;
+        frequency = period;
     }
 
     @Override
@@ -53,11 +55,13 @@ public class PopUpProductActivity extends AppCompatActivity {
                 String purchaseDate = purchaseDateField.getText().toString().trim();
                 String weight = weightField.getText().toString().trim();
 
+                boolean weightPresent = weight.length() != 0;
+
                 java.util.Date purchase;
                 format.setLenient(false);
 
-                if (purchaseDate.length() == 0 || weight.length() == 0) {
-                    Toast.makeText(getApplicationContext(), "Please fill in both fields.",
+                if (purchaseDate.length() == 0) {
+                    Toast.makeText(getApplicationContext(), "Please fill in the purchase date.",
                             Toast.LENGTH_LONG).show();
                 } else {
                     try {
@@ -70,10 +74,14 @@ public class PopUpProductActivity extends AppCompatActivity {
                                     "Invalid date input. The purchase day you provided is in the future.",
                                     Toast.LENGTH_LONG).show();
                         } else {
-                            Product product = new Product(purchase, lifespan,
-                                    Double.valueOf(weight));
-
-                            ProductActivity.addProduct(product);
+                            if (weightPresent) {
+                                Product product = new Product(purchase, lifespan, frequency,
+                                        Double.valueOf(weight));
+                                ProductActivity.addProduct(product);
+                            } else {
+                                Product product = new Product(purchase, lifespan, frequency);
+                                ProductActivity.addProduct(product);
+                            }
 
                             Toast.makeText(getApplicationContext(),
                                     "New product added.",

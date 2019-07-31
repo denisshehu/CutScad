@@ -42,6 +42,7 @@ public class ProductRecyclerViewAdapter extends
         final TextView expirationDate = viewHolder.expirationDate;
         final TextView passedDays = viewHolder.passedDays;
         final TextView lifespan = viewHolder.lifespan;
+        final TextView weightText = viewHolder.weightText;
         final TextView weight = viewHolder.weight;
         final TextView remainingDays = viewHolder.remainingDays;
         final TextView daysText = viewHolder.daysText;
@@ -51,8 +52,8 @@ public class ProductRecyclerViewAdapter extends
         final ImageButton addDaysButton = viewHolder.addDaysButton;
         final ImageButton subtractDaysButton = viewHolder.subtractDaysButton;
 
-        displayInformation(product, purchaseDate, expirationDate, passedDays, lifespan, weight,
-                remainingDays, daysText, cardColor);
+        displayInformation(product, purchaseDate, expirationDate, passedDays, lifespan, weightText,
+                weight, remainingDays, daysText, cardColor);
 
         throwButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,10 +75,11 @@ public class ProductRecyclerViewAdapter extends
         addDaysButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                product.setLifespan(product.getLifespan() + 1);
-                product.setExpirationDate(product.getLifespan());
+                product.incrementLifespan();
+                System.out.println(product.getLifespanInDays());
+                product.setExpirationDate();
                 displayInformation(product, purchaseDate, expirationDate, passedDays, lifespan,
-                        weight, remainingDays, daysText, cardColor);
+                        weightText, weight, remainingDays, daysText, cardColor);
                 checkSubtractButtonVisibility(product.writeRemainingDays(), subtractDaysButton);
             }
         });
@@ -85,18 +87,19 @@ public class ProductRecyclerViewAdapter extends
         subtractDaysButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                product.setLifespan(product.getLifespan() - 1);
-                product.setExpirationDate(product.getLifespan());
+                product.decrementLifespan();
+                System.out.println(product.getLifespanInDays());
+                product.setExpirationDate();
                 displayInformation(product, purchaseDate, expirationDate, passedDays, lifespan,
-                        weight, remainingDays, daysText, cardColor);
+                        weightText, weight, remainingDays, daysText, cardColor);
                 checkSubtractButtonVisibility(product.writeRemainingDays(), subtractDaysButton);
             }
         });
     }
 
     private void displayInformation(Product product, TextView purchaseDate, TextView expirationDate,
-                                    TextView passedDays, TextView lifespan, TextView weight,
-                                    TextView remainingDays, TextView daysText,
+                                    TextView passedDays, TextView lifespan, TextView weightText,
+                                    TextView weight, TextView remainingDays, TextView daysText,
                                     LinearLayout cardColor) {
         String daysRemaining = product.writeRemainingDays();
         Double daysRemainingD = Double.valueOf(daysRemaining);
@@ -104,15 +107,18 @@ public class ProductRecyclerViewAdapter extends
         purchaseDate.setText(product.writeDate(product.getPurchaseDate()));
         expirationDate.setText(product.writeDate(product.getExpirationDate()));
         passedDays.setText(product.writePassedDays());
-        lifespan.setText(product.writeLifespan(product.getLifespan(),
-                products.getFrequency()));
+        lifespan.setText(product.writeLifespan());
         weight.setText(product.writeWeight());
+        if (weight.getText().toString().equals("NaN")) {
+            weightText.setVisibility(View.GONE);
+            weight.setVisibility(View.GONE);
+        }
         remainingDays.setText(daysRemaining);
         daysText.setText(product.writeDaysText(daysRemaining));
 
         if (daysRemainingD < 2.0) {
             cardColor.setBackgroundResource(R.drawable.red_right_panel);
-        } else if (daysRemainingD / product.getLifespan().doubleValue() <= 0.5) {
+        } else if (daysRemainingD / product.getLifespanInDays().doubleValue() <= 0.5) {
             cardColor.setBackgroundResource(R.drawable.orange_right_panel);
         } else {
             cardColor.setBackgroundResource(R.drawable.green_right_panel);
@@ -141,6 +147,7 @@ public class ProductRecyclerViewAdapter extends
         TextView expirationDate;
         TextView passedDays;
         TextView lifespan;
+        TextView weightText;
         TextView weight;
         TextView remainingDays;
         TextView daysText;
@@ -156,6 +163,7 @@ public class ProductRecyclerViewAdapter extends
             expirationDate = itemView.findViewById(R.id.expirationDate);
             passedDays = itemView.findViewById(R.id.passedDays);
             lifespan = itemView.findViewById(R.id.lifespanValue);
+            weightText = itemView.findViewById(R.id.weightText);
             weight = itemView.findViewById(R.id.weightValue);
             remainingDays = itemView.findViewById(R.id.remainingDays);
             daysText = itemView.findViewById(R.id.daysText);

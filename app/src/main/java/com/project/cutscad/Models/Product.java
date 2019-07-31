@@ -10,14 +10,20 @@ public class Product {
 
     private Date purchaseDate;
     private Date expirationDate;
-    private Integer lifespan;
+    private Integer lifespanInDays;
     private Double weight;
 
-    public Product(Date purchaseDate, Integer lifespan, Double weight) {
+    public Product(Date purchaseDate, Integer lifespan, Frequency frequency, Double weight) {
         this.purchaseDate = purchaseDate;
-        setExpirationDate(lifespan);
-        this.lifespan = lifespan;
+        lifespanInDays = initialLifespan(lifespan, frequency);
+        setExpirationDate();
         this.weight = weight;
+    }
+
+    public Product(Date purchaseDate, Integer lifespan, Frequency frequency) {
+        this.purchaseDate = purchaseDate;
+        lifespanInDays = initialLifespan(lifespan, frequency);
+        setExpirationDate();
     }
 
     public Date getPurchaseDate() {
@@ -28,23 +34,31 @@ public class Product {
         return expirationDate;
     }
 
-    public Integer getLifespan() {
-        return lifespan;
+    public Integer getLifespanInDays() {
+        return lifespanInDays;
     }
 
     public Double getWeight() {
         return weight;
     }
 
-    public void setExpirationDate(Integer lifespan) {
+    public void setExpirationDate() {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(purchaseDate);
-        calendar.add(Calendar.DAY_OF_YEAR, lifespan);
+        calendar.add(Calendar.DAY_OF_YEAR, lifespanInDays);
         expirationDate = calendar.getTime();
     }
 
-    public void setLifespan(Integer lifespan) {
-        this.lifespan = lifespan;
+    public void setLifespanInDays(Integer lifespanInDays) {
+        this.lifespanInDays = lifespanInDays;
+    }
+
+    public Integer initialLifespan(Integer lifespan, Frequency frequency) {
+        if (frequency == Frequency.WEEK) {
+            return 7 * lifespan;
+        }
+
+        return lifespan;
     }
 
     public String writeDate(Date date) {
@@ -65,23 +79,25 @@ public class Product {
         }
     }
 
-    public String writeLifespan(Integer lifespan, Frequency productFrequency) {
-        String frequency = productFrequency.toString().toLowerCase();
-
-        if (lifespan == 1) {
-            return lifespan + " " + frequency;
+    public String writeLifespan() {
+        if (lifespanInDays == 1) {
+            return "1 day";
         } else {
-            return lifespan + " " + frequency + "s";
+            return lifespanInDays + " days";
         }
     }
 
     public String writeWeight() {
+        if (weight == null) {
+                return "NaN";
+        }
+
         return weight.toString() + " kg";
     }
 
     public String writeRemainingDays() {
         long milliseconds = Calendar.getInstance().getTimeInMillis() - purchaseDate.getTime();
-        long days = lifespan - TimeUnit.MILLISECONDS.toDays(milliseconds);
+        long days = lifespanInDays - TimeUnit.MILLISECONDS.toDays(milliseconds);
         if (days < 0) {
             return "0";
         } else {
@@ -95,5 +111,13 @@ public class Product {
         } else {
             return "days";
         }
+    }
+
+    public void incrementLifespan() {
+        lifespanInDays += 1;
+    }
+
+    public void decrementLifespan() {
+        lifespanInDays -= 1;
     }
 }

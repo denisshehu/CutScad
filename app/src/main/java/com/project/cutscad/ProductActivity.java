@@ -46,7 +46,7 @@ public class ProductActivity extends AppCompatActivity {
         buildRecyclerView();
 
         noProductsText = findViewById(R.id.noProductsText);
-        checkVisibility();
+        checkProductVisibility();
 
         ImageButton editButton = findViewById(R.id.editButtonProduct);
         ImageButton deleteButton = findViewById(R.id.deleteButtonProduct);
@@ -75,7 +75,7 @@ public class ProductActivity extends AppCompatActivity {
             public void onClick(View v) {
                 startActivity(new Intent(ProductActivity.this,
                         PopUpProductActivity.class));
-                PopUpProductActivity.setLifespan(products.getLifespan());
+                PopUpProductActivity.setLifespan(products.getLifespan(), products.getFrequency());
             }
         });
     }
@@ -90,7 +90,7 @@ public class ProductActivity extends AppCompatActivity {
     public static void addProduct(Product product) {
         products.getProducts().add(product);
         adapter.notifyItemInserted(products.getProducts().size() - 1);
-        checkVisibility();
+        checkProductVisibility();
     }
 
     public static void removeProduct(Product product) {
@@ -106,10 +106,10 @@ public class ProductActivity extends AppCompatActivity {
 
         products.getProducts().remove(product);
         adapter.notifyItemRemoved(position);
-        checkVisibility();
+        checkProductVisibility();
     }
 
-    private static void checkVisibility() {
+    private static void checkProductVisibility() {
         if (products.getProducts().size() == 0) {
             noProductsText.setVisibility(View.VISIBLE);
         } else {
