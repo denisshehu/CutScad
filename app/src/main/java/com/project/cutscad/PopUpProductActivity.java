@@ -25,9 +25,23 @@ public class PopUpProductActivity extends AppCompatActivity {
     private static Frequency frequency;
     private DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
+    private static Product product;
+    private static boolean updateMode;
+
+    TextView header;
+    TextView purchaseDateField;
+    TextView weightField;
+    Button cancelButton;
+    Button addButton;
+
     public static void setLifespan(Integer number, Frequency period) {
         lifespan = number;
         frequency = period;
+    }
+
+    public static void update(Product p) {
+        updateMode = true;
+        product = p;
     }
 
     @Override
@@ -35,17 +49,23 @@ public class PopUpProductActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pop_up_product);
 
+        header = findViewById(R.id.headerTextPUP);
+        purchaseDateField = findViewById(R.id.purchaseDateField);
+        weightField = findViewById(R.id.weightField);
+        cancelButton = findViewById(R.id.cancelButtonPUP);
+        addButton = findViewById(R.id.addButtonPUP);
+
         showPopUp();
 
-        final TextView purchaseDateField = findViewById(R.id.purchaseDateField);
-        final TextView weightField = findViewById(R.id.weightField);
-        Button cancelButton = findViewById(R.id.cancelButtonPUP);
-        Button addButton = findViewById(R.id.addButtonPUP);
+        if (updateMode) {
+            setUpdateMode();
+        }
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
+                updateMode = false;
             }
         });
 
@@ -74,19 +94,32 @@ public class PopUpProductActivity extends AppCompatActivity {
                                     "Invalid date input. The purchase day you provided is in the future.",
                                     Toast.LENGTH_LONG).show();
                         } else {
-                            if (weightPresent) {
-                                Product product = new Product(purchase, lifespan, frequency,
-                                        Double.valueOf(weight));
-                                ProductActivity.addProduct(product);
+                            if (updateMode) {
+                                product.setPurchaseDate(purchase);
+                                if (weight.trim().length() != 0) {
+                                    product.setWeight(Double.valueOf(weight));
+                                } else {
+                                    product.setWeight(null);
+                                }
+                                product.setExpirationDate();
+                                ProductActivity.adapter.notifyDataSetChanged();
                             } else {
-                                Product product = new Product(purchase, lifespan, frequency);
-                                ProductActivity.addProduct(product);
+                                if (weightPresent) {
+                                    Product product = new Product(purchase, lifespan, frequency,
+                                            Double.valueOf(weight));
+                                    ProductActivity.addProduct(product);
+                                } else {
+                                    Product product = new Product(purchase, lifespan, frequency);
+                                    ProductActivity.addProduct(product);
+                                }
+
+                                Toast.makeText(getApplicationContext(),
+                                        "New product added.",
+                                        Toast.LENGTH_LONG).show();
                             }
 
-                            Toast.makeText(getApplicationContext(),
-                                    "New product added.",
-                                    Toast.LENGTH_LONG).show();
                             finish();
+                            updateMode = false;
                         }
                     } catch (ParseException e) {
                         Toast.makeText(getApplicationContext(),
@@ -111,5 +144,15 @@ public class PopUpProductActivity extends AppCompatActivity {
         // Whatever was on the screen before the pop up window appeared
         // and what is not behind the window will still be visible.
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+    }
+
+    private void setUpdateMode() {
+        header.setText("Update product");
+        addButton.setText("Update");
+
+        purchaseDateField.setText(product.fillPurchaseField());
+        if (product.getWeight() != null) {
+            weightField.setText(product.fillWeightField());
+        }
     }
 }

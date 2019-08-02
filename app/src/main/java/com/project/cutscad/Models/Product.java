@@ -42,6 +42,10 @@ public class Product {
         return weight;
     }
 
+    public void setPurchaseDate(Date purchaseDate) {
+        this.purchaseDate = purchaseDate;
+    }
+
     public void setExpirationDate() {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(purchaseDate);
@@ -51,6 +55,10 @@ public class Product {
 
     public void setLifespanInDays(Integer lifespanInDays) {
         this.lifespanInDays = lifespanInDays;
+    }
+
+    public void setWeight(Double weight) {
+        this.weight = weight;
     }
 
     public Integer initialLifespan(Integer lifespan, Frequency frequency) {
@@ -64,6 +72,15 @@ public class Product {
     public String writeDate(Date date) {
         DateFormat format = new SimpleDateFormat("dd MMM yyyy");
         return format.format(date);
+    }
+
+    public String fillPurchaseField() {
+        DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        return format.format(purchaseDate);
+    }
+
+    public String fillWeightField() {
+        return weight.toString();
     }
 
     public String writePassedDays() {

@@ -67,6 +67,7 @@ public class ProductRecyclerViewAdapter extends
             @Override
             public void onClick(View v) {
                 context.startActivity(new Intent(context, PopUpProductActivity.class));
+                PopUpProductActivity.update(product);
             }
         });
 
@@ -109,10 +110,8 @@ public class ProductRecyclerViewAdapter extends
         passedDays.setText(product.writePassedDays());
         lifespan.setText(product.writeLifespan());
         weight.setText(product.writeWeight());
-        if (weight.getText().toString().equals("NaN")) {
-            weightText.setVisibility(View.GONE);
-            weight.setVisibility(View.GONE);
-        }
+        checkWeightVisibility(weightText, weight, weight.getText().toString());
+
         remainingDays.setText(daysRemaining);
         daysText.setText(product.writeDaysText(daysRemaining));
 
@@ -133,6 +132,16 @@ public class ProductRecyclerViewAdapter extends
         } else {
             subtractDaysButton.setVisibility(View.VISIBLE);
             subtractDaysButton.setClickable(true);
+        }
+    }
+
+    public void checkWeightVisibility(TextView weightText, TextView weight, String weightValue) {
+        if (weightValue.equals("NaN")) {
+            weightText.setVisibility(View.GONE);
+            weight.setVisibility(View.GONE);
+        } else {
+            weightText.setVisibility(View.VISIBLE);
+            weight.setVisibility(View.VISIBLE);
         }
     }
 

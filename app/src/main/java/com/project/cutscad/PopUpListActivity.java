@@ -158,9 +158,17 @@ public class PopUpListActivity extends Activity {
     }
 
     private void updateInformation(String name, String lifespan) {
+        Integer intLifespan = Integer.parseInt(lifespan);
+        Frequency frequency = ProductList.findFrequency(daysRadioButton);
         productList.setListName(name);
-        productList.setLifespan(Integer.parseInt(lifespan));
-        productList.setFrequency(ProductList.findFrequency(daysRadioButton));
+        productList.setLifespan(intLifespan);
+        productList.setFrequency(frequency);
+
+        for (Product product : productList.getProducts()) {
+            product.setLifespanInDays(product.initialLifespan(intLifespan, frequency));
+            product.setExpirationDate();
+            ProductActivity.adapter.notifyDataSetChanged();
+        }
 
         InventoryActivity.adapter.notifyDataSetChanged();
 
