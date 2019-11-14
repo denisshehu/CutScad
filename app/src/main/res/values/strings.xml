@@ -43,9 +43,12 @@
     <string name="edit">Edit</string>
     <string name="left">Left</string>
     <string name="updateButton">Update</string>
-    <string name="deleteHeader">Comfirm deletion</string>
-    <string name="deleteMessage">Are you sure you want to delete this list? All the data associated
-        with it will be deleted and can not be recovered.</string>
+    <string name="deleteListHeader">Confirm deletion</string>
+    <string name="deleteListMessage">Are you sure you want to delete this list? All the data
+        associated with it will be deleted and can not be recovered.</string>
+    <string name="deleteProductHeader">Throw confirmation</string>
+    <string name="deleteProductMessage">Are you sure you want to throw this product? All its data
+        will be deleted and can not be recovered.</string>
     <string name="delete">Delete</string>
     <string name="newProduct">New product</string>
     <string name="purchaseDateText">Purchase date:</string>

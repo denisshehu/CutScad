@@ -13,6 +13,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.project.cutscad.Models.FoodCategory;
 import com.project.cutscad.Models.Frequency;
 import com.project.cutscad.Models.Product;
 import com.project.cutscad.Models.ProductList;
@@ -23,6 +24,7 @@ public class PopUpListActivity extends Activity {
     static String header;
     static ProductList productList;
     static int updateMode = 0;
+    static FoodCategory foodCategory;
 
     TextView windowHeader;
     EditText nameField;
@@ -31,6 +33,10 @@ public class PopUpListActivity extends Activity {
     RadioButton weeksRadioButton;
     Button cancel;
     Button add;
+
+    public static void setFoodCategory(FoodCategory category) {
+        foodCategory = category;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,8 +84,7 @@ public class PopUpListActivity extends Activity {
                             ProductActivity.updatePage(productList);
                         }
                     } else {
-                        ProductList productList = new ProductList(name,
-                                ProductList.findCategory(InventoryActivity.getHeader()),
+                        ProductList productList = new ProductList(name, foodCategory,
                                 Integer.parseInt(lifespan),
                                 ProductList.findFrequency(daysRadioButton),
                                 new ArrayList<Product>());

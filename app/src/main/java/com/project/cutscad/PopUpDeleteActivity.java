@@ -55,9 +55,8 @@ public class PopUpDeleteActivity extends AppCompatActivity {
             TextView header = findViewById(R.id.headerTextPUD);
             TextView deleteMessage = findViewById(R.id.deleteMessage);
 
-            header.setText("Throw confirmation");
-            deleteMessage.setText(
-                    "Are you sure you want to throw this product? All its data will be deleted and can not be recovered.");
+            header.setText(R.string.deleteProductHeader);
+            deleteMessage.setText(R.string.deleteProductMessage);
         }
 
         Button cancelButton = findViewById(R.id.cancelButtonPUD);
@@ -86,8 +85,10 @@ public class PopUpDeleteActivity extends AppCompatActivity {
                         startActivity(newIntent);
                     }
                 }
+
                 Toast.makeText(getApplicationContext(), "List permanently deleted.",
                         Toast.LENGTH_LONG).show();
+
                 finish();
             }
         });

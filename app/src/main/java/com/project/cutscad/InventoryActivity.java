@@ -10,17 +10,19 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.project.cutscad.Models.Product;
+import com.project.cutscad.Models.FoodCategory;
 import com.project.cutscad.Models.ProductList;
 import java.util.ArrayList;
 
 public class InventoryActivity extends AppCompatActivity {
 
     private static ArrayList<ProductList> lists;
+    private static FoodCategory foodCategory;
     private static String header = ""; // This is the header/title of the activity.
 
-    public static void setData(ArrayList<ProductList> data) {
+    public static void setData(ArrayList<ProductList> data, FoodCategory category) {
         lists = data;
+        foodCategory = category;
     }
 
     public static void setHeader(String text) {
@@ -57,6 +59,7 @@ public class InventoryActivity extends AppCompatActivity {
             public void onClick(View v) {
                 startActivity(new Intent(InventoryActivity.this,
                         PopUpListActivity.class));
+                PopUpListActivity.setFoodCategory(foodCategory);
             }
         });
     }
@@ -75,12 +78,19 @@ public class InventoryActivity extends AppCompatActivity {
     }
 
     public static void addProductList(ProductList productList) {
+        StartActivity.data.add(productList);
         lists.add(productList);
         adapter.notifyItemInserted(lists.size() - 1);
         checkVisibility();
     }
 
     public static void removeProductList(ProductList productList) {
+        remove(StartActivity.data, productList, false);
+        remove(lists, productList, true);
+    }
+
+    public static void remove(ArrayList<ProductList> lists, ProductList productList,
+                             boolean notifyAdapter) {
         int position = -1;
         ProductList list;
 
@@ -94,8 +104,10 @@ public class InventoryActivity extends AppCompatActivity {
 
         if (position != -1) {
             lists.remove(productList);
-            adapter.notifyItemRemoved(position);
-            checkVisibility();
+            if (notifyAdapter) {
+                adapter.notifyItemRemoved(position);
+                checkVisibility();
+            }
         }
     }
 

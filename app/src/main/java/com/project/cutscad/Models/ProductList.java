@@ -60,29 +60,6 @@ public class ProductList {
         this.products = products;
     }
 
-    public static FoodCategory findCategory(String foodCategory) {
-        switch (foodCategory.charAt(0)) {
-            case 'D':
-                return FoodCategory.DAIRY;
-            case 'C':
-                return FoodCategory.CEREALS;
-            case 'V':
-                return FoodCategory.VEGETABLES;
-            case 'F':
-                return FoodCategory.FRUITS;
-            case 'M':
-                return FoodCategory.MEAT;
-            case 'S':
-                if (foodCategory.charAt(1) == 'E') {
-                    return FoodCategory.SEAFOOD;
-                } else {
-                    return FoodCategory.SUGARY_FOODS;
-                }
-            default:
-                return FoodCategory.ALCOHOL;
-        }
-    }
-
     public static Frequency findFrequency(RadioButton daysRadioButton) {
         if (daysRadioButton.isChecked()) {
             return Frequency.DAY;
