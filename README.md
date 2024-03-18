@@ -5,4 +5,4 @@ improvement_ at the [Eindhoven University of Technology](https://www.tue.nl/en/)
 
 The following image shows part of the UI and user flow of the app.
 
-![CutScad](C:\Users\its_d\Downloads\appStructure.png)
+![UI](ui.png)
